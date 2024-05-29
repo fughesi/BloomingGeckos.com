@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./media/favicon/favicon.png" />
+    <link rel="stylesheet" href="defaults.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="router.js" type="module" defer></script>
+    <script src="main.js" type="module" defer></script>
+    <script src="./utils/ajax.js" type="text/javascript" defer></script>
+    <title>stuff</title>
+  </head>
+  <body>
+    <div id="root">
+      <nav id="main-nav" class="sidebar">
+        <a href="/" onclick="route()">home</a>
+        <a href="/about" onclick="route()">about</a>
+        <a href="/contact" onclick="route()">contact</a>
+      </nav>
+      <h1>stuff</h1>
+
+      <p>
+        external url test:
+        <a href="http://www.google.com" target="_blank">link</a>
+      </p>
+      <div id="main-page"></div>
+    </div>
+
+    <div>
+      <button
+        onclick="talkToDatabase('main-page','get','http://localhost:5555/api/products/114')"
+      >
+        test button
+      </button>
+    </div>
+  </body>
+</html>

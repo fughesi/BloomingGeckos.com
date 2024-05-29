@@ -1,0 +1,36 @@
+:root {
+  /* COLORS */
+  --color1: #ffffff;
+  --color2: #ffffff;
+  --color3: #ffffff;
+  --color4: #ffffff;
+  --color5: #ffffff;
+
+  --accent1: #ffffff;
+  --accent2: #ffffff;
+
+  /* SIZES */
+  /* SHADOWS */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
