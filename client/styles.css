@@ -1,7 +1,24 @@
-#main-nav {
-  display: flex;
-  width: 100%;
-  font-size: 2rem;
-  align-content: center;
-  justify-content: space-evenly;
+#root {
+  display: grid;
+  width: 100vw;
+  min-height: 100vh;
+
+  grid-gap: 1rem;
+
+  #main-nav {
+    margin-top: 1.5rem;
+
+    font-family: var(--font3);
+    font-weight: 400;
+
+    display: flex;
+    width: 50%;
+
+    font-size: var(--size9);
+    align-items: center;
+    justify-content: space-evenly;
+
+    border-radius: 5rem;
+    background-color: var(--color3);
+  }
 }

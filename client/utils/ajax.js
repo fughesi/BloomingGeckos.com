@@ -1,8 +1,9 @@
-const talkToDatabase = async (target, method, url, body) => {
+const talkToDatabase = async (target, url, options) => {
   const addDataToElement = document.getElementById(String(target));
 
-  let options = {
-    method: String(method).toUpperCase(),
+  let fetchOptions = {
+    ...options,
+    method: options?.method ? String(options.method).toUpperCase() : "GET",
     mode: "cors",
     cache: "no-cache",
     credentials: "same-origin",
@@ -13,23 +14,13 @@ const talkToDatabase = async (target, method, url, body) => {
     referrerPolicy: "no-referrer",
   };
 
-  if (String(method).toUpperCase() !== "GET") {
-    options = {
-      ...options,
-      body: JSON.stringify(body),
-    };
-  }
-
-  const fetchedData = await fetch(String(url), options)
+  const fetchedData = await fetch(String(url), fetchOptions)
     .then((res) => res.json())
     .then((data) => data)
     .catch((error) => console.error(error.message))
     .finally(console.log("data fetched from API"));
 
   try {
-    // addDataToElement.append(
-    //   `this is the title ${fetchedData.contactLastName} and this is the id: ${fetchedData.city}`
-    // );
     addDataToElement.innerHTML = `this is the title ${fetchedData.contactLastName} and this is the id: ${fetchedData.city}`;
   } catch (error) {
     console.error(error.message);

@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "Tusj";
+  src: local("FFF_Tusj"), url("./FFF-Tusj/FFF_Tusj.ttf") format("TrueType");
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "advent-pro";
+  src: local("adventpro-regular"),
+    url("./advent-pro/adventpro-regular.ttf") format("TrueType");
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "advent-pro";
+  src: local("adventpro-bold"),
+    url("./advent-pro/adventpro-bold.ttf") format("TrueType");
+  font-style: bold;
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: "advent-pro";
+  src: local("adventpro-thin"),
+    url("./advent-pro/adventpro-thin.ttf") format("TrueType");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "lizards";
+  src: local("lizards"), url("./lizards/Lizards.ttf") format("TrueType");
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "bold-font";
+  src: local("bold-font"),
+    url("./bold-font/THE\ BOLD\ FONT.ttf") format("TrueType");
+  font-style: bold;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "bebas";
+  src: local("bebas"), url("./bebas/BebasNeue-Regular.ttf") format("TrueType");
+  font-style: normal;
+  font-weight: 700;
+}

@@ -39,6 +39,7 @@ http
     const contentType = mimeTypes[extname] || "text/html";
 
     serveFile(filePath, contentType, res);
+    console.log(req.method, req.url);
 
     switch (req.method) {
       case "GET":
@@ -46,25 +47,6 @@ http
           getAllProducts(req, res);
         } else if (route === `/api/products/${id}`) {
           getProductById(req, res, id);
-        } else {
-          // const mimeTypes = {
-          //   ".html": "text/html",
-          //   ".js": "application/javascript",
-          //   ".css": "text/css",
-          //   ".png": "image/png",
-          //   ".jpg": "image/jpeg",
-          //   ".gif": "image/gif",
-          //   ".svg": "image/svg+xml",
-          //   ".json": "application/json",
-          //   ".ico": "image/x-icon",
-          // };
-          // let filePath = "../client" + req.url;
-          // if (filePath === "../client/") {
-          //   filePath = "../client/index.html";
-          // }
-          // const extname = String(path.extname(filePath)).toLowerCase();
-          // const contentType = mimeTypes[extname] || "text/html";
-          // serveFile("../client/index.html", contentType, res);
         }
         break;
 
@@ -92,7 +74,7 @@ http
         break;
 
       default:
-        console.log("notFound");
+        console.log("route not found");
     }
   })
   .listen(PORT, () => {

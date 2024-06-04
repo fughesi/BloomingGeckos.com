@@ -1,4 +1,4 @@
-import { debounce } from "./utils/debounce.js";
+// import { debounce } from "./utils/debounce.js";
 // debounce(); <---implement this
 
 const route = (event) => {
@@ -9,7 +9,7 @@ const route = (event) => {
 };
 
 const routes = {
-  "/": "/pages/home/home.html",
+  "/": "pages/home/home.html",
   "/about": "pages/about/about.html",
   "/contact": "pages/contact/contact.html",
   404: "pages/404/404.html",
@@ -27,7 +27,7 @@ const handleLocation = async () => {
   const route = routes[path] || routes[404];
   const html = await fetch(route).then((data) => data.text());
   document.getElementById("main-page").innerHTML = html;
-  // document.title = `Blooming Geckos | ${title[path]}`;
+  document.title = `Blooming Geckos | ${title[path]}`;
 };
 
 window.onpopstate = handleLocation;

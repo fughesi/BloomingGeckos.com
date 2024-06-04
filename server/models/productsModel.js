@@ -1,10 +1,9 @@
-// const { Data } = require("../data");
 const { db } = require("../connection");
 const { writeDataToFile } = require("../utils");
 
 const findAllProducts = () => {
   return new Promise((resolve, reject) => {
-    db.execute("SELECT * FROM classicmodels.products")
+    db.execute("SELECT * FROM ninja_pizza.pizzas")
       .then(([data, fields]) => {
         console.log(data);
         resolve(data);
@@ -29,6 +28,24 @@ const findProductById = (id) => {
 };
 
 const createNewProduct = (product) => {
+  return new Promise((resolve, reject) => {
+    const firstName = "ginny";
+    const lastName = "hooker";
+    const phone = "6263349922";
+
+    db.execute(
+      "INSERT INTO customers (firstName, lastName, phone) VALUES (?,?,?)",
+      [firstName, lastName, phone]
+    )
+      .then(([data, fields]) => {
+        resolve(data);
+        console.log(data, fields);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+
   return new Promise((resolve, reject) => {
     const newproduct = {
       id: Math.floor(Math.random() * 1000000),
