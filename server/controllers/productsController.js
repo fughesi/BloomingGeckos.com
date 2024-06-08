@@ -1,37 +1,21 @@
-const Data = require("../models/productsModel");
+const { product_models } = require("../models/productsModel");
 const { getPostData } = require("../utils");
 
-// GET "/api/products"
-const getAllProducts = async (req, res) => {
-  try {
-    const result = await Data.findAllProducts();
-
+const products = {
+  // GET /api/product
+  getAllProducts: async (req, res) => {
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(result));
-  } catch (error) {
-    console.log(error);
-  }
-};
+    res.end(JSON.stringify(await product_models.findAllProducts()));
+  },
 
-// GET "/api/product/:id"
-const getProductById = async (req, res, id) => {
-  try {
-    const result = await Data.findProductById(String(id));
+  // GET /api/product/:id
+  getProductById: async (req, res, id) => {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(await product_models.findProductById(String(id))));
+  },
 
-    if (!result) {
-      console.log("not found");
-    } else {
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify(result));
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// POST "/api/product"
-const createProduct = async (req, res) => {
-  try {
+  // POST /api/product
+  createProduct: async (req, res) => {
     const body = await getPostData(req);
 
     const { title, description, price } = JSON.parse(body);
@@ -42,46 +26,36 @@ const createProduct = async (req, res) => {
       price,
     };
 
-    const newProduct = await Data.createNewProduct(product);
-
     res.writeHead(201, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(newProduct));
-  } catch (error) {
-    console.log(error);
-  }
-};
+    return res.end(
+      JSON.stringify(await product_models.createNewProduct(product))
+    );
+  },
 
-// PATCH "/api/product/:id"
-const updateProduct = async (req, res, id) => {
-  try {
-    const itemInDatabase = await Data.findProductById(String(id));
+  // PATCH /api/product/:id
+  updateProduct: async (req, res, id) => {
+    const itemInDatabase = await product_models.findProductById(String(id));
 
-    if (!itemInDatabase) {
-      console.log("error");
-    }
+    if (!itemInDatabase) console.log("error");
 
     const body = await getPostData(req);
 
     const { title, description, price } = JSON.parse(body);
 
     const product = {
-      title: title || Data.title,
-      description: description || Data.description,
-      price: price || Data.price,
+      title: title || itemInDatabase.title,
+      description: description || itemInDatabase.description,
+      price: price || itemInDatabase.price,
     };
 
-    const revisedProduct = await Data.updateNewProduct(id, product);
-
     res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(revisedProduct));
-  } catch (error) {
-    console.log(error);
-  }
+
+    return res.end(
+      JSON.stringify(await product_models.updateNewProduct(id, product))
+    );
+  },
 };
 
 module.exports = {
-  getAllProducts,
-  getProductById,
-  createProduct,
-  updateProduct,
+  products,
 };

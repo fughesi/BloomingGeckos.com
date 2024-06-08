@@ -16,13 +16,13 @@ const talkToDatabase = async (target, url, options) => {
 
   const fetchedData = await fetch(String(url), fetchOptions)
     .then((res) => res.json())
-    .then((data) => data)
+    .then((data) => console.log(data))
     .catch((error) => console.error(error.message))
     .finally(console.log("data fetched from API"));
 
   try {
-    addDataToElement.innerHTML = `this is the title ${fetchedData.contactLastName} and this is the id: ${fetchedData.city}`;
+    addDataToElement.innerHTML = `this is the title ${fetchedData?.ingredients} and this is the id: ${fetchedData?.email}`;
   } catch (error) {
-    console.error(error.message);
+    console.table({ error });
   }
 };

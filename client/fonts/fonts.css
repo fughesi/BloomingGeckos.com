@@ -39,9 +39,9 @@
 @font-face {
   font-family: "bold-font";
   src: local("bold-font"),
-    url("./bold-font/THE\ BOLD\ FONT.ttf") format("TrueType");
+    url("./bold-font/THE_BOLD_FONT.ttf") format("TrueType");
   font-style: bold;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 @font-face {
