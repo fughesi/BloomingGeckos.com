@@ -1,5 +1,5 @@
 const { product_models } = require("../models/productsModel");
-const { getPostData } = require("../utils");
+const { utils } = require("../utils");
 
 const products = {
   // GET /api/product
@@ -16,7 +16,7 @@ const products = {
 
   // POST /api/product
   createProduct: async (req, res) => {
-    const body = await getPostData(req);
+    const body = await utils.getPostData(req);
 
     const { title, description, price } = JSON.parse(body);
 
@@ -38,7 +38,7 @@ const products = {
 
     if (!itemInDatabase) console.log("error");
 
-    const body = await getPostData(req);
+    const body = await utils.getPostData(req);
 
     const { title, description, price } = JSON.parse(body);
 

@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="icon" type="image/x-icon" href="./media/favicon/favicon.png" />
-    <link rel="stylesheet" href="defaults.css" />
     <link rel="stylesheet" href="styles.css" />
-    <script src="router.js" type="module" defer></script>
+    <link rel="stylesheet" href="defaults.css" />
+
+    <script src="router.js" defer></script>
+    <script src="./utils/ajax.js" defer></script>
     <script src="main.js" type="module" defer></script>
-    <script src="./utils/ajax.js" type="text/javascript" defer></script>
-    <title>Blooming Geckos</title>
   </head>
   <body>
     <main id="root">
@@ -17,22 +18,14 @@
         <a href="/" onclick="route()">home</a>
         <a href="/about" onclick="route()">about</a>
         <a href="/contact" onclick="route()">contact</a>
+        <a href="/terms" onclick="route()">terms</a>
+        <a href="/care" onclick="route()">care</a>
+        <a href="/listing" onclick="route()">listing</a>
+        <a href="/availability" onclick="route()">availability</a>
       </nav>
-      <h1>This is the container page</h1>
 
-      <p>
-        external url test:
-        <a href="http://www.google.com" target="_blank">link</a>
-      </p>
       <div id="main-page"></div>
-
-      <div>
-        <button
-          onclick="talkToDatabase('main-page','http://localhost:5555/api/products')"
-        >
-          test button
-        </button>
-      </div>
     </main>
+    <script id="source"></script>
   </body>
 </html>

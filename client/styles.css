@@ -1,24 +1,33 @@
 #root {
-  display: grid;
-  width: 100vw;
   min-height: 100vh;
+  width: 100vw;
 
-  grid-gap: 1rem;
+  margin-top: 7rem;
 
   #main-nav {
-    margin-top: 1.5rem;
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 10;
 
-    font-family: var(--font4);
-    font-weight: 400;
-
+    font-family: var(--font2);
     display: flex;
-    width: 50%;
 
-    font-size: var(--size9);
-    align-items: center;
-    justify-content: space-evenly;
+    transition: all 1000ms ease;
 
-    border-radius: 5rem;
-    background-color: var(--color3);
+    a {
+      font-size: var(--size7);
+      align-items: center;
+      justify-content: space-around;
+      margin-left: 1rem;
+      color: var(--color3);
+    }
+
+    & :hover,
+    & :focus {
+      text-decoration: underline 3px solid red;
+    }
+
+    background-color: var(--color2);
+    box-shadow: var(--shadow5);
   }
 }

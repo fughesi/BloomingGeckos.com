@@ -2,11 +2,11 @@
 
 :root {
   /* COLORS */
-  --color1: #e1eded;
-  --color2: #cfeded;
-  --color3: #071952;
-  --color4: #2a9c9d;
-  --color5: #2d03ff;
+  --color1: #005c78;
+  --color2: #006989;
+  --color3: #f3f7ec;
+  --color4: #e7d37f;
+  --color5: #e88d67;
 
   --white: #eeeeee;
   --black: #252422;
@@ -79,7 +79,7 @@ body {
   opacity: 0;
   margin: 0;
 
-  background-color: var(--color1);
+  background-color: var(--white);
   color: var(--black);
   font-family: var(--font2), sans-serif;
 
@@ -88,14 +88,10 @@ body {
   -ms-overflow-style: none;
 
   animation: 3s forwards fade;
-}
 
-body::-webkit-scrollbar {
-  display: none;
-}
-
-body:has(img.cartModal) {
-  overflow-y: hidden;
+  & ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 main {
@@ -144,16 +140,6 @@ input {
 .fadeIn {
   scale: 1 !important;
   opacity: 1 !important;
-}
-
-.FAQfieldset {
-  width: min-content;
-  margin-left: 1rem;
-
-  & legend {
-    font-size: var(--size5);
-    color: var(--color3);
-  }
 }
 
 @keyframes fade {

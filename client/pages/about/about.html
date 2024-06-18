@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="/pages/about/about.css" />
 
-
 <div id="aboutDiv">this the about page</div>
 
-</div>
-
-<button id="bub">XHR</button>
+<button
+  onclick="talkToDatabase('aboutDiv','http://localhost:5555/api/products')"
+>
+  things!
+</button>

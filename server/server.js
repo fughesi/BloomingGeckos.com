@@ -8,7 +8,7 @@ const { utils } = require("./utils");
 
 const mimeTypes = {
   ".html": "text/html",
-  ".js": "application/javascript",
+  ".js": "text/javascript",
   ".css": "text/css",
   ".png": "image/png",
   ".jpg": "image/jpeg",
