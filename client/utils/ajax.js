@@ -1,5 +1,5 @@
-const talkToDatabase = async (target, url, options) => {
-  const addDataToElement = document.getElementById(String(target));
+export const fetchRequest = async (target, url, options) => {
+  const element = document.getElementById(String(target));
 
   let fetchOptions = {
     ...options,
@@ -21,7 +21,7 @@ const talkToDatabase = async (target, url, options) => {
     .finally(console.log("data fetched from API"));
 
   try {
-    addDataToElement.innerHTML = `this is the title ${fetchedData[0]?.ingredients} and this is the id: ${fetchedData[0]?.email}`;
+    element.innerHTML = `this is the title ${fetchedData[0]?.ingredients} and this is the id: ${fetchedData[0]?.email}`;
   } catch (error) {
     console.table({ error });
   }

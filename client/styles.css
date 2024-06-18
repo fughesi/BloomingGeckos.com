@@ -9,7 +9,7 @@
     inset: 0 0 auto 0;
     z-index: 10;
 
-    font-family: var(--font2);
+    font-family: var(--font6);
     display: flex;
 
     transition: all 1000ms ease;
