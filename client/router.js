@@ -52,22 +52,26 @@ const handleLocation = async () => {
   fetch(html)
     .then((res) => res.text())
     .then((html) => {
-      document.getElementById("main-page").innerHTML = html;
+      document.getElementById("root").innerHTML = html;
       document.title = `Blooming Geckos | ${routes[path].title}`;
 
-      const source = document.getElementById("source");
-      const script = document.createElement("script");
-      script.src = js;
-      script.id = "source";
-      document.body.replaceChild(script, source);
+      const page = document.getElementById("page");
+      const script1 = document.createElement("script");
+      script1.src = js;
+      script1.id = "page";
+      document.body.replaceChild(script1, page);
 
-      //testing
-
-      const test = document.getElementById("test");
+      const effects = document.getElementById("effects");
       const script2 = document.createElement("script");
       script2.src = "./utils/effects.js";
-      script2.id = "test";
-      document.body.replaceChild(script2, test);
+      script2.id = "effects";
+      document.body.replaceChild(script2, effects);
+
+      const performance = document.getElementById("performance");
+      const script3 = document.createElement("script");
+      script3.src = "./utils/performance.js";
+      script3.id = "performance";
+      document.body.replaceChild(script3, performance);
     });
 };
 

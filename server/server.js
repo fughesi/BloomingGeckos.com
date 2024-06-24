@@ -1,11 +1,10 @@
-process.env.PORT = 5555;
-
-const fs = require("node:fs");
 const http = require("node:http");
 const path = require("node:path");
+const fs = require("node:fs").promises;
 const PORT = process.env.PORT || 5550;
-const { products } = require("./controllers/productsController");
 const { utils } = require("./middleware/utils");
+const { logger } = require("./middleware/logger");
+const { products } = require("./controllers/productsController");
 
 const mimeTypes = {
   ".html": "text/html",
@@ -32,11 +31,6 @@ http
       const contentType = mimeTypes[extname] || "text/html";
 
       utils.serveFile(filePath, contentType, res);
-
-      //test
-      if (extname === ".html") {
-        // fs.createReadStream("../client/index.html").pipe(res.end());
-      }
 
       switch (req.method) {
         case "GET":
@@ -71,7 +65,8 @@ http
           console.table({ 404: "route not found" });
       }
     } catch (error) {
-      console.table({ error });
+      logger(req, res, error).errorLogs();
+      console.log(error);
     }
   })
   .listen(PORT, () => {

@@ -23,6 +23,6 @@ export const fetchRequest = async (target, url, options) => {
   try {
     element.innerHTML = `this is the title ${fetchedData[0]?.ingredients} and this is the id: ${fetchedData[0]?.email}`;
   } catch (error) {
-    console.table({ error });
+    throw new Error("Fetch request failed");
   }
 };

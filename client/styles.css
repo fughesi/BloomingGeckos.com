@@ -1,10 +1,10 @@
-#root {
+#container {
   min-height: 100vh;
   width: 100vw;
 
   margin-top: 7rem;
 
-  #main-nav {
+  #desktopNav {
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 10;

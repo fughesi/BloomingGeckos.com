@@ -1,5 +1,10 @@
 const { db } = require("../connections/connectionSQL");
 const { utils } = require("../middleware/utils");
+const { encoding } = require("../middleware/cipher");
+
+let g = encoding("putz").cipher();
+let r = encoding(g).decipher();
+console.log(g, "\n", r);
 
 const product_models = {
   findAllProducts: () => {

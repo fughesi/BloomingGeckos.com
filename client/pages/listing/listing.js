@@ -1,7 +1,6 @@
-document.getElementById("testbtn").addEventListener("click", (a, b) => {
-  alert(a * b);
-});
+testbtn.addEventListener(
+  "click",
+  performance().debounce(() => console.log(4 * 3))
+);
 
-console.log("sup bitches");
-
-effects("#aboutDiv", 2.2).parallax();
+effects("#aboutDiv", -0.4).parallax();

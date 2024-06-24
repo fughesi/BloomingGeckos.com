@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="defaults.css" />
 
     <script src="router.js" defer></script>
+    <script src="main.js" defer></script>
   </head>
   <body>
-    <main id="root">
-      <nav id="main-nav" class="sidebar">
+    <main id="container">
+      <nav id="desktopNav" class="sidebar">
         <a href="/" onclick="route()">home</a>
         <a href="/about" onclick="route()">about</a>
         <a href="/contact" onclick="route()">contact</a>
@@ -22,16 +23,18 @@
         <a href="/availability" onclick="route()">availability</a>
       </nav>
 
-      <div id="main-page"></div>
+      <!-- //test -->
+      <button id="tog">toggle darkmode</button>
+
+      <div id="root"></div>
     </main>
 
     <footer>this is the footer</footer>
 
-    <noscript
-      >Must have JavaScript turned on for site to work correctly</noscript
-    >
-    <script id="source"></script>
-    <script id="test"></script>
+    <noscript>Must enable JavaScript for site to work correctly</noscript>
+    <script id="page"></script>
+    <script id="effects"></script>
+    <script id="performance"></script>
     <script>
       window.addEventListener("error", (e) => {
         e.preventDefault();
