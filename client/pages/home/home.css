@@ -1,3 +1,29 @@
-img[alt="orange stock footage of gecko"] {
-  width: 350px;
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 300px));
+  place-content: center;
+  gap: 0.5rem;
+
+  & div {
+    background-color: var(--color1);
+  }
+}
+
+img {
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+
+.blur-load {
+  background-size: cover;
+  background-position: center;
+  display: inline;
+  aspect-ratio: 1/1;
+}
+
+.blur-load > img {
+  transition: all 300ms ease-in;
+  opacity: 0;
 }

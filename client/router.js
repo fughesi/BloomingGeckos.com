@@ -60,6 +60,14 @@ const handleLocation = async () => {
       script.src = js;
       script.id = "source";
       document.body.replaceChild(script, source);
+
+      //testing
+
+      const test = document.getElementById("test");
+      const script2 = document.createElement("script");
+      script2.src = "./utils/effects.js";
+      script2.id = "test";
+      document.body.replaceChild(script2, test);
     });
 };
 

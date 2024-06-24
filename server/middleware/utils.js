@@ -5,7 +5,7 @@ const utils = {
     fs.writeFile(filename, JSON.stringify(content), "utf-8", (error) => {
       // fs.createReadStream(content).pipe(filename)
 
-      if (error) console.error(error);
+      if (error) throw new Error("failed to write data to file");
     });
   },
 
@@ -14,15 +14,15 @@ const utils = {
       try {
         let body = "";
 
-        req
-          .on("data", (chunk) => {
-            body += chunk.toString();
-          })
-          .on("end", async () => {
-            resolve(body);
-          });
+        req.on("data", (chunk) => {
+          body += chunk.toString();
+        });
+
+        req.on("end", () => {
+          resolve(body);
+        });
       } catch (error) {
-        reject(error);
+        reject("failed to post data to database\n", error);
       }
     });
   },

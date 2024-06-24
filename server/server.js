@@ -1,10 +1,11 @@
 process.env.PORT = 5555;
 
+const fs = require("node:fs");
 const http = require("node:http");
 const path = require("node:path");
 const PORT = process.env.PORT || 5550;
 const { products } = require("./controllers/productsController");
-const { utils } = require("./utils");
+const { utils } = require("./middleware/utils");
 
 const mimeTypes = {
   ".html": "text/html",
@@ -22,35 +23,38 @@ const mimeTypes = {
 http
   .createServer(async (req, res) => {
     try {
-      const params = req.url.match(/\/api\/products\/([0-9])+/);
       let filePath = "../client" + req.url;
-      const id = req.url.split("/")[3];
-      const route = req.url;
-
       if (filePath === "../client/") filePath = "../client/index.html";
 
+      const id = req.url.split(":")[1];
+      const route = req.url;
       const extname = String(path.extname(filePath)).toLowerCase();
       const contentType = mimeTypes[extname] || "text/html";
 
       utils.serveFile(filePath, contentType, res);
 
+      //test
+      if (extname === ".html") {
+        // fs.createReadStream("../client/index.html").pipe(res.end());
+      }
+
       switch (req.method) {
         case "GET":
           if (route === "/api/products") {
             await products.getAllProducts(req, res);
-          } else if (route === `/api/products/${id}`) {
+          } else if (route === `/api/products/:${id}`) {
             await products.getProductById(req, res, id);
           }
           break;
 
         case "POST":
           if (route === "/api/products") {
-            await products.createProduct(req, res, id);
+            await products.createProduct(req, res);
           }
           break;
 
         case "PATCH":
-          if (params) {
+          if (id) {
             await products.updateProduct(req, res, id);
           }
           break;
@@ -58,8 +62,8 @@ http
         case "DELETE":
           if (route === "/api/products") {
             await products.getAllProducts(req, res);
-          } else if (params) {
-            res.end(JSON.stringify({ params, id, method: "delete" }));
+          } else if (id) {
+            res.end(JSON.stringify({ id, method: "delete" }));
           }
           break;
 

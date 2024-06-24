@@ -1,1 +1,3 @@
-const things = { test: (a) => console.log(`things and ${a}`) };
+document.querySelectorAll("img").forEach((pic) => {
+  pic.addEventListener("load", () => pic.classList.add("fadeIn"));
+});

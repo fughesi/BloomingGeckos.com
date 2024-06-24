@@ -122,9 +122,8 @@ input {
   justify-content: start;
 
   cursor: pointer;
-  padding: 1.5rem;
+  padding: 0.25rem;
   font-size: var(--size5);
-  color: var(--grey1);
   border-radius: 0.5rem;
   border: 1px solid var(--grey1);
   background-color: var(--grey3);
@@ -141,6 +140,7 @@ input {
 .fadeIn {
   scale: 1 !important;
   opacity: 1 !important;
+  transition: opacity 350ms ease-in;
 }
 
 @keyframes fade {

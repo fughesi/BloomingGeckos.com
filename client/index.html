@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="defaults.css" />
 
     <script src="router.js" defer></script>
-    <script src="main.js" type="module" defer></script>
   </head>
   <body>
     <main id="root">
@@ -25,6 +24,23 @@
 
       <div id="main-page"></div>
     </main>
+
+    <footer>this is the footer</footer>
+
+    <noscript
+      >Must have JavaScript turned on for site to work correctly</noscript
+    >
     <script id="source"></script>
+    <script id="test"></script>
+    <script>
+      window.addEventListener("error", (e) => {
+        e.preventDefault();
+        console.table({
+          ErrorMsg: e.message,
+          ErrorSource: e.filename,
+          ErrorStack: e.error.stack,
+        });
+      });
+    </script>
   </body>
 </html>

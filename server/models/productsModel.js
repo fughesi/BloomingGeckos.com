@@ -1,5 +1,5 @@
-const { db } = require("../connection");
-const { utils } = require("../utils");
+const { db } = require("../connections/connectionSQL");
+const { utils } = require("../middleware/utils");
 
 const product_models = {
   findAllProducts: () => {
