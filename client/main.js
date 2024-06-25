@@ -11,7 +11,7 @@ function main(elem) {
     },
 
     darkmode: () => {
-      const DM = document.documentElement.style;
+      const DM = document.documentElement.style; //root of document
       let colorScheme = sessionStorage.getItem("color-scheme");
 
       if (colorScheme == "true") {
@@ -47,9 +47,16 @@ function main(elem) {
 
     toggleGlobals: () => {
       element?.addEventListener("click", () => {
-        globals.toggle("dark");
+        globals.toggle("dark"); //defined above
         sessionStorage.setItem("color-scheme", globals.contains("dark"));
-        main().darkmode();
+
+        let elem = element.classList;
+        elem.toggle("toggle-switch"); //add class for styling
+        element.innerText = `${
+          elem.contains("toggle-switch") ? "LIGHT MODE" : "DARK MODE"
+        }`; //change name of button
+
+        main().darkmode(); //call func to change variables
       });
     },
 
@@ -69,3 +76,23 @@ function main(elem) {
 main().signature();
 main().darkmode();
 main("tog").toggleGlobals();
+
+fetch("lib/links.json") // footer links
+  .then((res) => res.json())
+  .then((links) => {
+    let footerContent = "";
+    links
+      .map((i) => {
+        footerContent += `
+        <div>
+          <p>${i.title}</p>
+          <ul>
+          ${i.links.map((x) => `<li>${x}</li>`).join("")}
+          </ul>
+        </div>
+      `;
+        return footerContent;
+      })
+      .join("");
+    footer.innerHTML = footerContent;
+  });

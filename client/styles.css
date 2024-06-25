@@ -4,7 +4,7 @@
 
   margin-top: 7rem;
 
-  #desktopNav {
+  #nav {
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 10;

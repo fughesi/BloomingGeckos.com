@@ -7,7 +7,7 @@ function performance(elem) {
       pic.addEventListener("load", () => pic.classList.add("fadeIn"));
     }),
 
-    debounce: (func, fuse = 1000) => {
+    debounce: (func, fuse = 500) => {
       let delay;
 
       return function (...args) {

@@ -13,9 +13,9 @@ function effects(elem, speed) {
           const bounds = item.getBoundingClientRect();
           // adds effect when element in view
           if (bounds.top < height && bounds.bottom > 0) {
-            item.style.transform = `translateY(${window.scrollY * speed}px)`;
+            item.style.transform = `translateY(${window.scrollY * speed}px)`; //negative number
           } else {
-            //stops scrolling when out of view
+            //removes effect when out of view
             window.removeEventListener("scroll", () => {
               element.forEach((item) => item.style.removeProperty("transform"));
             });
@@ -28,9 +28,11 @@ function effects(elem, speed) {
       element.forEach((item) => {
         window.addEventListener("scroll", () => {
           const bounds = item.getBoundingClientRect();
+          // adds effect when element in view
           if (bounds.top < height && bounds.bottom > 0) {
             item.style.scale = window.scrollY * speed;
           } else {
+            //removes effect when out of view
             window.removeEventListener("scroll", () => {
               element.forEach((item) => item.style.removeProperty("scale"));
             });
@@ -43,9 +45,11 @@ function effects(elem, speed) {
       element.forEach((item) => {
         window.addEventListener("scroll", () => {
           const bounds = item.getBoundingClientRect();
+          // adds effect when element in view
           if (bounds.top < height && bounds.bottom > 0) {
             item.style.opacity = window.scrollY * speed;
           } else {
+            //removes effect when out of view
             window.removeEventListener("scroll", () => {
               element.forEach((item) => item.style.removeProperty("opacity"));
             });
@@ -56,9 +60,9 @@ function effects(elem, speed) {
 
     observer: (style, margin = "0px 0px 0px 0px", stops = 0.0) => {
       let options = {
-        root: null,
+        root: null, //never used
         rootMargin: String(margin),
-        threshold: stops,
+        threshold: stops, // array or float
       };
 
       const observer = new IntersectionObserver((entries) => {
