@@ -1,3 +1,4 @@
+const crypto = require("node:crypto");
 const { db } = require("../connections/connectionSQL");
 const { utils } = require("../middleware/utils");
 const { encoding } = require("../middleware/encoding");
@@ -9,21 +10,17 @@ function productModels() {
   return {
     findAllProducts: () => {
       return new Promise((resolve, reject) => {
-        db.execute("SELECT * FROM ninja_pizza.pizzas").then(
-          ([data, fields]) => {
-            console.log(encoding("password").cipher());
-            resolve(data);
-          }
-        );
+        db.execute("SELECT * FROM geckos.customers").then(([data, fields]) => {
+          resolve(data);
+        });
       });
     },
 
     findProductById: (id) => {
       return new Promise((resolve, reject) => {
-        db.execute(
-          "SELECT * FROM classicmodels.customers WHERE customerNumber = ?",
-          [id]
-        ).then(([data, fields]) => {
+        db.execute("SELECT * FROM geckos.customers WHERE customerNumber = ?", [
+          id,
+        ]).then(([data, fields]) => {
           resolve(data[0]);
         });
       });
@@ -31,15 +28,12 @@ function productModels() {
 
     createNewProduct: (product) => {
       return new Promise((resolve, reject) => {
-        const firstName = "ginny";
-        const lastName = "hooker";
-        const phone = "6263349922";
-
+        const { firstName, lastName, phone } = product;
+        const UUID = crypto.randomUUID();
         db.execute(
-          "INSERT INTO customers (firstName, lastName, phone) VALUES (?,?,?)",
-          [firstName, lastName, phone]
+          "INSERT INTO customers (UUID,firstName, lastName, phone) VALUES (?,?,?,?)",
+          [UUID, firstName, lastName, phone]
         ).then(([data, fields]) => {
-          console.log(data, fields);
           resolve(data);
         });
       });

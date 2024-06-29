@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 5550;
 const { utils } = require("./middleware/utils");
 const { logger } = require("./middleware/logger");
 const { productRoutes } = require("./routes/productRoutes");
+const { customerRoutes } = require("./routes/customerRoutes");
 
 const mimeTypes = {
   ".html": "text/html",
@@ -24,51 +25,13 @@ http
       let filePath = "../client" + req.url;
       if (filePath === "../client/") filePath = "../client/index.html";
 
-      const id = req.url.split(":")[1];
-      const route = req.url;
       const extname = String(path.extname(filePath)).toLowerCase();
       const contentType = mimeTypes[extname] || "text/html";
 
-      utils.serveFile(filePath, contentType, res);
+      utils().serveFile(filePath, contentType, res);
 
-      if (route == "/api/products") productRoutes(req, res, id);
-      if (route == "/api/users") userRoutes(req, res, id);
-
-      // res.writeHead(404, { "Content-Type": "application/json" });
-      // res.end({ error: "route not found" });
-
-      // switch (req.method) {
-      //   case "GET":
-      //     if (route === "/api/products") {
-      //       await products.getAllProducts(req, res);
-      //     } else if (route === `/api/products/:${id}`) {
-      //       await products.getProductById(req, res, id);
-      //     }
-      //     break;
-      //
-      //   case "POST":
-      //     if (route === "/api/products") {
-      //       await products.createProduct(req, res);
-      //     }
-      //     break;
-      //
-      //   case "PATCH":
-      //     if (id) {
-      //       await products.updateProduct(req, res, id);
-      //     }
-      //     break;
-      //
-      //   case "DELETE":
-      //     if (route === "/api/products") {
-      //       await products.getAllProducts(req, res);
-      //     } else if (id) {
-      //       res.end(JSON.stringify({ id, method: "delete" }));
-      //     }
-      //     break;
-      //
-      //   default:
-      //     console.table({ 404: "route not found" });
-      // }
+      if (/\/api\/products[/]?(\w+)?/i.test(req.url)) productRoutes(req, res);
+      if (/\/api\/customers[/]?(\w+)?/i.test(req.url)) customerRoutes(req, res);
     } catch (error) {
       logger(req, res, error).errorLogs();
       console.log(error);

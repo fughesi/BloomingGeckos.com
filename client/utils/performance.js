@@ -46,7 +46,7 @@ function performance(elem) {
     mutation: () => {
       const mutated = new MutationObserver((mutations) => {
         mutations.forEach((item) => {
-          console.log(item);
+          // console.log(item);
         });
       });
 

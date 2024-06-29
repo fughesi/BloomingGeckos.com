@@ -1,44 +1,37 @@
-const { utils } = require("../middleware/utils");
 const { productControllers } = require("../controllers/productControllers");
 
 async function productRoutes(req, res) {
-  const route = req.url;
-  const id = route.split(":")[1];
-  console.log(req.url, "\n", id);
+  const id = req.url.split("/")[3];
 
-  switch (req.url) {
+  switch (String(req.method).toUpperCase()) {
     case "GET":
-      if (route === "/api/products") {
-        await productControllers.getAllProducts(req, res);
-      } else if (route === `/api/products/:${id}`) {
-        await productControllers.getProductById(req, res, id);
+      if (id) {
+        await productControllers(req, res).getProductById(id);
+      } else {
+        await productControllers(req, res).getAllProducts();
       }
       break;
 
     case "POST":
-      if (route === "/api/products") {
-        await productControllers.createProduct(req, res);
-      }
+      await productControllers(req, res).createProduct();
       break;
 
     case "PATCH":
       if (id) {
-        await productControllers.updateProduct(req, res, id);
+        await productControllers(req, res).updateProduct(id);
       }
       break;
 
     case "DELETE":
-      if (route === "/api/products") {
-        await productControllers.getAllProducts(req, res);
-      } else if (id) {
+      if (id) {
         res.end(JSON.stringify({ id, method: "delete" }));
+      } else {
+        await productControllers(req, res).getAllProducts();
       }
       break;
 
     default:
       console.table({ 404: "route not found" });
-      {
-      }
   }
 }
 

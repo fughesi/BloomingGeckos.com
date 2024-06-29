@@ -1,3 +1,7 @@
 6/26/2024	4:05:31 PM	[id:54f86fea]	TypeError: Cannot read properties of undefined (reading 'method')
 6/28/2024	4:24:11 AM	[id:02c0f915]	TypeError: Cannot read properties of undefined (reading 'getAllProducts')
 6/28/2024	7:06:04 PM	[id:ccada59d]	TypeError [ERR_INVALID_ARG_TYPE]: The "chunk" argument must be of type string or an instance of Buffer or Uint8Array. Received an instance of Object
+6/29/2024	11:33:45 AM	[id:5f10072a]	ReferenceError: route is not defined
+6/29/2024	11:38:10 AM	[id:1290d186]	ReferenceError: id is not defined
+6/29/2024	11:38:37 AM	[id:a6dc8629]	ReferenceError: id is not defined
+6/29/2024	11:39:15 AM	[id:d5397865]	ReferenceError: id is not defined
