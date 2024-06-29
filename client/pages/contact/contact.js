@@ -32,6 +32,8 @@ contactForm.addEventListener("input", (e) => {
   sessionStorage.setItem("contactForm", JSON.stringify(savedInputData));
 });
 
+performance("contactForm").regexFormValidation();
+
 (function () {
   const savedData = JSON.parse(sessionStorage.getItem("contactForm"));
 

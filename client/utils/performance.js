@@ -18,6 +18,31 @@ function performance(elem) {
       };
     },
 
+    regexFormValidation: () => {
+      const patterns = {
+        firstName: /^[a-z\d]{5,12}$/i,
+        username: /^[a-z\d]{5,12}$/i,
+        password: /^[\w@-]{8,20}$/,
+        telephone: /^\d{11}$/,
+        email: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/i,
+      };
+
+      function validate(field, regex) {
+        if (regex?.test(field.value)) {
+          field.classList.add("valid-input");
+        } else {
+          field.classList.remove("valid-input");
+        }
+      }
+
+      element?.querySelectorAll("input").forEach((item) => {
+        item.addEventListener("input", (e) => {
+          const name = e.target.attributes.name.value;
+          validate(e.target, patterns[name]);
+        });
+      });
+    },
+
     mutation: () => {
       const mutated = new MutationObserver((mutations) => {
         mutations.forEach((item) => {

@@ -1,10 +1,9 @@
 const http = require("node:http");
 const path = require("node:path");
-const fs = require("node:fs").promises;
 const PORT = process.env.PORT || 5550;
 const { utils } = require("./middleware/utils");
 const { logger } = require("./middleware/logger");
-const { products } = require("./controllers/productsController");
+const { productRoutes } = require("./routes/productRoutes");
 
 const mimeTypes = {
   ".html": "text/html",
@@ -32,38 +31,44 @@ http
 
       utils.serveFile(filePath, contentType, res);
 
-      switch (req.method) {
-        case "GET":
-          if (route === "/api/products") {
-            await products.getAllProducts(req, res);
-          } else if (route === `/api/products/:${id}`) {
-            await products.getProductById(req, res, id);
-          }
-          break;
+      if (route == "/api/products") productRoutes(req, res, id);
+      if (route == "/api/users") userRoutes(req, res, id);
 
-        case "POST":
-          if (route === "/api/products") {
-            await products.createProduct(req, res);
-          }
-          break;
+      // res.writeHead(404, { "Content-Type": "application/json" });
+      // res.end({ error: "route not found" });
 
-        case "PATCH":
-          if (id) {
-            await products.updateProduct(req, res, id);
-          }
-          break;
-
-        case "DELETE":
-          if (route === "/api/products") {
-            await products.getAllProducts(req, res);
-          } else if (id) {
-            res.end(JSON.stringify({ id, method: "delete" }));
-          }
-          break;
-
-        default:
-          console.table({ 404: "route not found" });
-      }
+      // switch (req.method) {
+      //   case "GET":
+      //     if (route === "/api/products") {
+      //       await products.getAllProducts(req, res);
+      //     } else if (route === `/api/products/:${id}`) {
+      //       await products.getProductById(req, res, id);
+      //     }
+      //     break;
+      //
+      //   case "POST":
+      //     if (route === "/api/products") {
+      //       await products.createProduct(req, res);
+      //     }
+      //     break;
+      //
+      //   case "PATCH":
+      //     if (id) {
+      //       await products.updateProduct(req, res, id);
+      //     }
+      //     break;
+      //
+      //   case "DELETE":
+      //     if (route === "/api/products") {
+      //       await products.getAllProducts(req, res);
+      //     } else if (id) {
+      //       res.end(JSON.stringify({ id, method: "delete" }));
+      //     }
+      //     break;
+      //
+      //   default:
+      //     console.table({ 404: "route not found" });
+      // }
     } catch (error) {
       logger(req, res, error).errorLogs();
       console.log(error);

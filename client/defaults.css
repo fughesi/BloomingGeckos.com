@@ -125,8 +125,15 @@ input {
   padding: 0.25rem;
   font-size: var(--size5);
   border-radius: 0.5rem;
-  border: 1px solid var(--grey1);
+  border: 3px solid var(--grey1);
   background-color: var(--grey3);
+
+  + p {
+    padding-left: 1rem;
+    font-size: var(--size2);
+    font-family: var(--font6);
+    color: red;
+  }
 }
 
 .none {
@@ -141,6 +148,14 @@ input {
   scale: 1 !important;
   opacity: 1 !important;
   transition: opacity 350ms ease-in;
+}
+
+.valid-input {
+  border-color: var(--accent1);
+
+  + p {
+    visibility: hidden;
+  }
 }
 
 @keyframes fade {

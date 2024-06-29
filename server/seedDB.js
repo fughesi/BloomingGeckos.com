@@ -1,4 +1,4 @@
-const { db } = require("./connection");
+const { db } = require("./connections/connectionSQL");
 
 return new Promise((resolve, reject) => {
   const firstName = ["frankie", "timmy", "girtrude", "manuel"];
