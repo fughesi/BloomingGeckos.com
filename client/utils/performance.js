@@ -2,11 +2,6 @@ function performance(elem) {
   const element = document.getElementById(String(elem));
 
   return {
-    hideImageUntilLoaded: document.querySelectorAll("img").forEach((pic) => {
-      pic.loading = "lazy";
-      pic.addEventListener("load", () => pic.classList.add("fadeIn"));
-    }),
-
     debounce: (func, fuse = 500) => {
       let delay;
 
@@ -76,6 +71,20 @@ function performance(elem) {
       );
 
       return response;
+    },
+
+    fadeImages: () => {
+      document.querySelectorAll("img").forEach((pic) => {
+        pic.loading = "lazy";
+        function loaded() {
+          pic.classList.add("fadeIn");
+        }
+        if (pic.complete) {
+          loaded();
+        } else {
+          pic.addEventListener("load", loaded);
+        }
+      });
     },
   };
 }

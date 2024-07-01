@@ -12,6 +12,9 @@ function main(elem) {
 
     darkmode: () => {
       const DM = document.documentElement.style; //root of document
+      sessionStorage.getItem("color-scheme") ??
+        sessionStorage.setItem("color-scheme", false);
+
       let colorScheme = sessionStorage.getItem("color-scheme");
 
       if (colorScheme == "true") {
@@ -52,10 +55,7 @@ function main(elem) {
 
         let elem = element.classList;
         elem.toggle("toggle-switch"); //add class for styling
-        element.innerText = `${
-          elem.contains("toggle-switch") ? "LIGHT MODE" : "DARK MODE"
-        }`; //change name of button
-
+        element.innerText = `${elem.contains("toggle-switch") ? "🌞" : "🌛"}`; //change name of button
         main().darkmode(); //call func to change variables
       });
     },
@@ -77,6 +77,8 @@ main().signature();
 main().darkmode();
 main("tog").toggleGlobals();
 
+if (sessionStorage.getItem("color-scheme") === "true") tog.innerText = "🌞";
+
 fetch("lib/links.json") // footer links
   .then((res) => res.json())
   .then((links) => {
@@ -87,7 +89,9 @@ fetch("lib/links.json") // footer links
         <div>
           <p>${i.title}</p>
           <ul>
-          ${i.links.map((x) => `<li>${x}</li>`).join("")}
+          ${i.links
+            .map((x) => `<li><a href="#" noreferrer>${x}</a></li>`)
+            .join("")}
           </ul>
         </div>
       `;
@@ -96,3 +100,54 @@ fetch("lib/links.json") // footer links
       .join("");
     footer.innerHTML = footerContent;
   });
+
+fetch("./lib/species.json")
+  .then((res) => res.json())
+  .then((modal) => {
+    console.log(modal, "\n", popover.getAttribute("data-uid"));
+    let dialogBoxText = "";
+    modal
+      .map((item) => {
+        const formattedPrice = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(item.price);
+        dialogBoxText = `
+<h1>Information for ${
+          item.species
+        } <span class="small-modal-text">(common names include: ${item.common_names.join(
+          ", "
+        )})</span></h1>
+        <p>Length between ${item.length.at(0) ?? ""}" and ${
+          item.length.at(1) ?? ""
+        }" // will typically live between ${item.lifespan.at(0) ?? ""} and ${
+          item.lifespan.at(1) ?? ""
+        } years</p>
+<p>this species prefers to eat ${item.diet.join(", ")}, and prefers a ${
+          item.environment
+        } environment in a ${item.housing} (between ${item.housing_size.at(
+          0
+        )} and ${item.housing_size.at(1)} gallons)</p>
+<hr />
+
+
+<p>${formattedPrice}</p>
+<p>suggested items to purchase for your new gecko: ${item.supplies.join(
+          ", "
+        )}</p>
+
+
+`;
+      })
+      .join(" ");
+
+    popover.innerHTML = dialogBoxText;
+  });
+
+popover.addEventListener("toggle", (e) => {
+  if (e.newState === "open") {
+    document.body.classList.add("modal-open");
+  } else {
+    document.body.classList.remove("modal-open");
+  }
+});

@@ -1,3 +1,11 @@
 document.querySelectorAll("img").forEach((pic) => {
-  pic.addEventListener("load", () => pic.classList.add("fadeIn"));
+  pic.loading = "lazy";
+  function loaded() {
+    pic.classList.add("fadeIn");
+  }
+  if (pic.complete) {
+    loaded();
+  } else {
+    pic.addEventListener("load", loaded);
+  }
 });

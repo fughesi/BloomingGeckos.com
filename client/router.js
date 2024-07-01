@@ -55,11 +55,11 @@ const handleLocation = async () => {
       document.getElementById("root").innerHTML = html;
       document.title = `Blooming Geckos | ${routes[path].title}`;
 
-      const page = document.getElementById("page");
+      const performance = document.getElementById("performance");
       const script1 = document.createElement("script");
-      script1.src = js;
-      script1.id = "page";
-      document.body.replaceChild(script1, page);
+      script1.src = "./utils/performance.js";
+      script1.id = "performance";
+      document.body.replaceChild(script1, performance);
 
       const effects = document.getElementById("effects");
       const script2 = document.createElement("script");
@@ -67,11 +67,11 @@ const handleLocation = async () => {
       script2.id = "effects";
       document.body.replaceChild(script2, effects);
 
-      const performance = document.getElementById("performance");
+      const page = document.getElementById("page");
       const script3 = document.createElement("script");
-      script3.src = "./utils/performance.js";
-      script3.id = "performance";
-      document.body.replaceChild(script3, performance);
+      script3.src = js;
+      script3.id = "page";
+      document.body.replaceChild(script3, page);
     });
 };
 

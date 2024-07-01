@@ -1,0 +1,35 @@
+[
+  {
+    "species": "gecko",
+    "common_names": ["fat-tailed beefeater", "spotted gecko", "panther gecko"],
+    "length": [5.5, 10],
+    "nocturnal": true,
+    "housing": "large glass enclosure/aquarium with branches for climbing and places to hide",
+    "substrate": ["coconut husk", "orchid bark", "soil", "dried leaves"],
+    "housing_size": [10, 15],
+    "environment": "humid",
+    "humidity": [60, 70],
+    "temperature": [70, 85],
+    "diet": ["crickets", "mealworms", "waxworms", "superworms"],
+    "temperament": "angry",
+    "health": "healthy",
+    "handling": "never grab by its tail",
+    "diseases": {
+      "Stomatitis": "also called \"mouth rot\"",
+      "Parasites": "worms",
+      "Dysecdysis": "problems shedding",
+      "Respiratory_issues": "Usually caused by low temperatures"
+    },
+    "lifespan": [6, 10],
+    "price": 39.99,
+    "supplies": [
+      "heat lamp",
+      "hydrometer",
+      "water bowl",
+      "hand-held mister",
+      "misting system",
+      "food bowl"
+    ],
+    "blog": "the best gecko!"
+  }
+]

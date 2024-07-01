@@ -13,27 +13,34 @@
   </head>
   <body>
     <main id="container">
-      <nav id="nav" class="sidebar">
-        <a href="/" onclick="route()">home</a>
-        <a href="/about" onclick="route()">about</a>
-        <a href="/contact" onclick="route()">contact</a>
-        <a href="/terms" onclick="route()">terms</a>
-        <a href="/care" onclick="route()">care</a>
-        <a href="/listing" onclick="route()">listing</a>
-        <a href="/availability" onclick="route()">availability</a>
-      </nav>
+      <details class="nav-reveal">
+        <summary>NAVIGATION</summary>
+        <nav id="nav">
+          <a href="/" onclick="route()">home</a>
+          <a href="/about" onclick="route()">about</a>
+          <a href="/contact" onclick="route()">contact</a>
+          <a href="/terms" onclick="route()">terms</a>
+          <a href="/care" onclick="route()">care</a>
+          <a href="/listing" onclick="route()">listing</a>
+          <a href="/availability" onclick="route()">availability</a>
+        </nav>
+      </details>
 
-      <button id="tog">DARK MODE</button>
+      <button id="tog">🌛</button>
+      <!-- <button id="tog">DARK MODE</button> -->
 
       <div id="root"></div>
+
+      <button popovertarget="popover">ABOUT THIS GECKO</button>
+      <div id="popover" popover data-uid="4444"></div>
     </main>
 
-    <footer id="footer">this is the footer</footer>
+    <footer id="footer"></footer>
 
     <noscript>Must enable JavaScript for site to work correctly</noscript>
-    <script id="page"></script>
-    <script id="effects"></script>
     <script id="performance"></script>
+    <script id="effects"></script>
+    <script id="page"></script>
     <script>
       window.addEventListener("error", (e) => {
         e.preventDefault();

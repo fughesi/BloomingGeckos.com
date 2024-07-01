@@ -1,33 +1,116 @@
 #container {
+  position: relative;
   min-height: 100vh;
   width: 100vw;
+  z-index: 2;
 
-  margin-top: 7rem;
+  padding-top: 5rem;
+  margin-bottom: 20rem;
+
+  box-shadow: var(--shadow5);
+  background-color: var(--color2);
+
+  .nav-reveal {
+    z-index: 100;
+    /* position: -webkit-sticky; */
+    /* position: sticky; */
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    margin-left: 2rem;
+    cursor: pointer;
+
+    width: fit-content;
+    background-color: #fff4;
+    backdrop-filter: blur(20px);
+
+    & ::marker {
+      content: "";
+    }
+
+    & summary {
+      font-family: var(--font2);
+      font-size: var(--size6);
+    }
+
+    & summary::before {
+      position: absolute;
+      content: "➕";
+
+      padding: 0;
+      top: -0.25rem;
+      left: -2rem;
+      transition: all 400ms ease-out;
+    }
+  }
+
+  [open] > summary::before {
+    rotate: 45deg;
+    transform-origin: center;
+  }
+
+  [open] > #nav a {
+    grid-template-rows: 1fr;
+  }
 
   #nav {
-    position: fixed;
-    inset: 0 0 auto 0;
-    z-index: 10;
+    z-index: 3;
+    padding: 1rem;
+    width: fit-content;
 
-    font-family: var(--font6);
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(7, min-content);
+    grid-template-rows: 1fr;
 
-    transition: all 1000ms ease;
+    font-family: var(--font5);
+    box-shadow: var(--shadow5);
 
+    transition: all 1000ms;
     a {
-      font-size: var(--size7);
+      font-size: var(--size5);
       align-items: center;
       justify-content: space-around;
       margin-left: 1rem;
-      color: var(--color3);
+
+      overflow: hidden;
+    }
+
+    a:last-child {
+      padding-right: 2rem;
     }
 
     & :hover,
     & :focus {
       text-decoration: underline 3px solid red;
     }
-
-    background-color: var(--color2);
-    box-shadow: var(--shadow5);
   }
+
+  #tog {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+
+    border: none;
+    font-size: var(--size6);
+    background-color: unset;
+  }
+
+  #popover {
+    height: 80svh;
+    width: 80vw;
+    background-color: green;
+  }
+}
+
+#footer {
+  z-index: 1;
+  position: fixed;
+  inset: auto 0 0 0;
+  display: flex;
+}
+
+::backdrop {
+  background-color: #0004;
+  filter: blur(6px);
+  filter: grayscale(80%);
 }

@@ -64,7 +64,6 @@ function effects(elem, speed) {
         rootMargin: String(margin),
         threshold: stops, // array or float
       };
-
       const observer = new IntersectionObserver((entries) => {
         entries?.forEach((entry) => {
           entry.isIntersecting
@@ -74,6 +73,16 @@ function effects(elem, speed) {
       }, options);
 
       element.forEach((elem) => observer.observe(elem));
+    },
+
+    popoverEffects: () => {
+      element[0].addEventListener("toggle", (event) => {
+        if (event.newState === "open") {
+          document.body.classList.add("stop-scrolling");
+        } else {
+          document.body.classList.remove("stop-scrolling");
+        }
+      });
     },
   };
 }
