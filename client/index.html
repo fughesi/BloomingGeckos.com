@@ -26,13 +26,23 @@
         </nav>
       </details>
 
-      <button id="tog">🌛</button>
-      <!-- <button id="tog">DARK MODE</button> -->
+      <div class="top-right-btns">
+        <button id="tog">✨</button>
+        <button id="cart" popovertarget="shoppingCart">
+          <img src="./media/icons/cart-yellow.svg" alt="cart icon" width="75" />
+          <div id="shoppingCart" class="popover" popover></div>
+        </button>
+      </div>
 
       <div id="root"></div>
 
       <button popovertarget="popover">ABOUT THIS GECKO</button>
-      <div id="popover" popover data-uid="4444"></div>
+      <div id="popover" class="popover" popover></div>
+
+      <div class="profileDiv">
+        <p>Welcome to Blooming Geckos</p>
+        <img src="./media/geckos/img1.jpg" alt="profile image" width="125" />
+      </div>
     </main>
 
     <footer id="footer"></footer>

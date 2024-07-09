@@ -6,9 +6,9 @@ async function customerRoutes(req, res) {
   switch (String(req.method).toUpperCase()) {
     case "GET":
       if (id) {
-        await customerControllers(req, res).getUserById(id);
+        await customerControllers(req, res).getCustomerById(id);
       } else {
-        await customerControllers(req, res).getAllUsers();
+        await customerControllers(req, res).getAllCustomers();
       }
       break;
 

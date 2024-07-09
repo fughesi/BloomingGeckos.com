@@ -2,14 +2,14 @@
 
 :root {
   /* COLORS */
-  --color1: #005c78;
-  --color2: #006989;
-  --color3: #f3f7ec;
-  --color4: #e7d37f;
-  --color5: #e88d67;
+  --color1: #eeeeee;
+  --color2: #686d76;
+  --color3: #373a40;
+  --color4: #181c24;
+  --color5: #dc5f00;
 
   --white: #eeeeee;
-  --black: #252422;
+  --black: #191717;
 
   --grey1: #cccccc;
   --grey2: #999999;
@@ -46,10 +46,10 @@
   --shadow2: 1px 1px 1px #666, 2px 2px 5px #999;
   --shadow3: 1px 3px 3px #333, -1px -1px 1px #ccc;
   --shadow4: 5px 2px 2px #000, 22px -2px 10px #000;
-  --shadow5: 1px 1px 1px #000, 18px -1px 4px #333;
+  --shadow5: 1px 1px 1px #000, 18px 15px 15px #0004;
   --shadow6: 0px 0px 1.5px #000;
   --shadow7: 1px 1px 3px #000, 0 0 1px #000;
-  --shadow8: 5px 5px 0px var(--accent1);
+  --shadow8: 0px 0px 3px #3335, 0px 11px 15px var(--color1);
 
   /* RADIUS */
   --radius1: 2rem;
@@ -70,7 +70,6 @@
 }
 
 html {
-  color-scheme: dark light;
   scroll-behavior: smooth;
 }
 
@@ -78,8 +77,8 @@ body {
   opacity: 0;
   margin: 0;
 
-  background-color: var(--white);
   color: var(--black);
+  background-color: var(--white);
   font-family: var(--font2), sans-serif;
 
   overflow-x: hidden;
@@ -87,7 +86,6 @@ body {
   -ms-overflow-style: none;
 
   transition: all 350ms;
-
   animation: 3s forwards fade;
 
   & ::-webkit-scrollbar {
@@ -114,6 +112,22 @@ li {
   list-style: none;
 }
 
+.fadeIn {
+  scale: 1 !important;
+  opacity: 1 !important;
+  transition: opacity 350ms ease-in;
+}
+
+.none {
+  display: none !important;
+}
+
+/***** OBSERVER *****/
+.move {
+  transform: translate(0, 0) !important;
+}
+
+/***** FORMS *****/
 input {
   display: flex;
   align-items: flex-start;
@@ -134,20 +148,6 @@ input {
   }
 }
 
-.none {
-  display: none !important;
-}
-
-.move {
-  transform: translate(0, 0) !important;
-}
-
-.fadeIn {
-  scale: 1 !important;
-  opacity: 1 !important;
-  transition: opacity 350ms ease-in;
-}
-
 .valid-input {
   border-color: var(--accent1);
 
@@ -156,10 +156,66 @@ input {
   }
 }
 
+/***** MODAL *****/
+.popover {
+  height: 80svh;
+  width: 80vw;
+  background-color: var(--white);
+  box-shadow: var(--shadow5);
+}
+
 .modal-open {
   height: 100%;
   overflow: hidden;
   filter: grayscale(100%);
+}
+
+::backdrop {
+  background-color: #0009;
+}
+
+/***** TOOLTIP *****/
+.tooltip {
+  position: relative;
+  cursor: pointer;
+  text-decoration: underline 1px dotted var(--grey4);
+  text-underline-offset: 0.2em;
+  padding: 0.1em 0.5rem;
+}
+
+.tooltip::before,
+.tooltip::after {
+  position: absolute;
+  opacity: 0;
+  background-color: var(--black);
+}
+
+.tooltip::before {
+  z-index: 10;
+  bottom: 100%;
+  padding: 1rem 1rem 2rem;
+  content: attr(data-tooltip);
+  display: none;
+  user-select: none;
+  color: var(--white);
+  font-family: var(--font1);
+  font-size: var(--size3);
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 80%,
+    60% 80%,
+    50% 100%,
+    40% 80%,
+    0% 80%,
+    0% 0%
+  );
+}
+
+.tooltip:hover::before,
+.tooltip:focus::before {
+  display: inline;
+  animation: 500ms forwards fade;
 }
 
 @keyframes fade {

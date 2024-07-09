@@ -1,4 +1,3 @@
-const { productModels } = require("../models/productModels");
 const { utils } = require("../middleware/utils");
 
 function productControllers(req, res) {
