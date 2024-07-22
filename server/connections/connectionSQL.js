@@ -2,11 +2,6 @@ const { createPool } = require("mysql2/promise");
 
 function db(query) {
   const pool = createPool({
-    // host: "localhost",
-    // user: "cam",
-    // password: "123123",
-    // database: "geckos",
-
     host: process.env.HOST,
     user: process.env.USER_MYSQL,
     password: process.env.PASSWORD_MYSQL,

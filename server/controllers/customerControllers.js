@@ -1,5 +1,6 @@
 const { utils } = require("../middleware/utils");
 const { db } = require("../connections/connectionPG");
+const { validate } = require("../middleware/validate");
 const { encoding } = require("../middleware/encoding");
 
 function customerControllers(req, res) {
@@ -43,20 +44,13 @@ function customerControllers(req, res) {
       const { id, first_name, last_name, email, gender, password } = JSON.parse(
         await utils().getBodyData(req)
       );
-
-      const encryptedPassword = encoding(password).cipher();
-
-      let allFieldsTrue = [
-        typeof id == "number",
-        typeof first_name == "string",
-        first_name.length > 0,
-        typeof last_name == "string",
-        last_name.length > 0,
-        typeof email == "string",
-        email.length > 0,
-        typeof gender == "string",
-        gender.length == 1,
-      ].every(Boolean); //verify complete
+      // validate all fields first
+      validate(id).valid || "id field not valid";
+      validate(first_name).name().valid || "first name field not valid";
+      validate(last_name).name().valid || "last name field not valid";
+      validate(email).email().valid || "email field not valid";
+      validate(gender).valid || "gender field not valid";
+      validate(password).password().valid || "password field not valid";
 
       if (!allFieldsTrue) {
         res.statusCode = 400;
@@ -66,6 +60,9 @@ function customerControllers(req, res) {
           })
         );
       }
+
+      // then format all valid fields and prep for db
+      const encryptedPassword = encoding(password).cipher();
 
       db("INSERT INTO customers VALUES ($1, $2, $3, $4, $5, $6)")
         .queryWithArgs(
