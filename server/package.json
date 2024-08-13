@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "serve": "nodemon --env-file=.env  server.js"
+    "server": "nodemon --env-file=.env  server.js"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,7 @@
     "nodemon": "^3.1.0"
   },
   "dependencies": {
-    "mysql2": "^3.9.7",
+    "mysql2": "^3.11.0",
     "pg": "^8.12.0"
   }
 }

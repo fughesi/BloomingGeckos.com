@@ -1,5 +1,6 @@
+const crypto = require("node:crypto");
 const { utils } = require("../middleware/utils");
-const { db } = require("../connections/connectionPG");
+const { db } = require("../connections/connectionSQL");
 const { validate } = require("../middleware/validate");
 const { encoding } = require("../middleware/encoding");
 
@@ -7,12 +8,13 @@ function customerControllers(req, res) {
   res.statusCode = 200;
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*"); // allow all connections
+  // res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET", "POST");
 
   return {
     // GET /api/customer
     getAllCustomers: async () => {
       try {
-        const customers = await db("SELECT * FROM customers").query();
+        const customers = await db("SELECT * FROM customer").query();
         let result = customers || {
           message: "sorry, no customers retrieved from database",
         };
@@ -27,7 +29,7 @@ function customerControllers(req, res) {
     getCustomerById: async (id) => {
       try {
         const customer = await db(
-          "SELECT * FROM customers WHERE id = $1"
+          "SELECT * FROM customer WHERE id = ?"
         ).queryWithArgs(id);
         let result = customer || {
           message: "sorry, no customer retrieved from database with that id",
@@ -41,47 +43,51 @@ function customerControllers(req, res) {
 
     // POST /api/customer
     createCustomer: async () => {
-      const { id, first_name, last_name, email, gender, password } = JSON.parse(
+      // get the information from the form
+      const { firstName, lastName, email, salutation, password } = JSON.parse(
         await utils().getBodyData(req)
       );
-      // validate all fields first
-      validate(id).valid || "id field not valid";
-      validate(first_name).name().valid || "first name field not valid";
-      validate(last_name).name().valid || "last name field not valid";
+      // validate all fields
+      validate(firstName).name().valid || "first name field not valid";
+      validate(lastName).name().valid || "last name field not valid";
       validate(email).email().valid || "email field not valid";
-      validate(gender).valid || "gender field not valid";
       validate(password).password().valid || "password field not valid";
 
-      if (!allFieldsTrue) {
-        res.statusCode = 400;
-        res.end(
-          JSON.stringify({
-            message: "All form fields must be complete to process this request",
-          })
-        );
-      }
+      // if (!allFieldsTrue) {
+      //   res.statusCode = 400;
+      //   res.end(
+      //     JSON.stringify({
+      //       message: "All form fields must be complete to process this request",
+      //     })
+      //   );
+      // }
 
-      // then format all valid fields and prep for db
+      // format all valid fields and prep for db
       const encryptedPassword = encoding(password).cipher();
+      const uuid = crypto.randomUUID();
 
-      db("INSERT INTO customers VALUES ($1, $2, $3, $4, $5, $6)")
+      db(
+        "INSERT INTO customer (id, first_name, last_name, uuid, salutation, password, email) VALUES (default,?,?,?,?,?,?)"
+      )
         .queryWithArgs(
-          id,
-          first_name,
-          last_name,
-          email,
-          gender,
-          encryptedPassword
+          firstName,
+          lastName,
+          uuid,
+          salutation,
+          encryptedPassword,
+          email
         )
         .then(async () => {
+          // return newly created customer to frontend
           const newCustomer = await db(
-            "SELECT * FROM customers WHERE id = $1"
-          ).queryById(id);
-
+            "SELECT * FROM customer WHERE uuid = ?"
+          ).queryWithArgs(uuid);
+          console.log(newCustomer);
           res.statusCode = 201;
           res.end(JSON.stringify(newCustomer));
         })
         .catch((error) => {
+          console.log(error);
           res.statusCode = 400;
           res.end(JSON.stringify({ error }));
         });

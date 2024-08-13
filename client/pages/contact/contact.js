@@ -1,17 +1,19 @@
 reset.addEventListener("click", () => sessionStorage.removeItem("contactForm"));
 
+// create new customer form BEGIN ----
 contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const req = new Request("http://localhost:5555/api/products", {
-    headers: {
-      "content-type": "multipart/form-data",
-    },
-    mode: "cors",
-    method: "POST",
-    // body: new FormData(contactForm),
-    body: { title: "blah", description: "stuff", price: 333 },
-  });
+  const requestObj = Object.fromEntries(new FormData(contactForm));
+
+  const headerObj = new Headers();
+  headerObj.append("Content-Type", "application/json");
+
+  const req = new Request("http://localhost:5555/api/customers");
+  req.mode = "cors";
+  req.method = "POST";
+  req.headers = headerObj;
+  req.body = JSON.stringify(requestObj);
 
   fetch(req)
     .then((res) => res.json())
@@ -33,6 +35,7 @@ contactForm.addEventListener("input", (e) => {
 });
 
 performance("contactForm").regexFormValidation();
+// create new customer form END ----
 
 (function () {
   const savedData = JSON.parse(sessionStorage.getItem("contactForm"));

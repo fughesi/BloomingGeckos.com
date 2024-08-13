@@ -4,12 +4,15 @@ function db(query) {
   const pool = createPool({
     host: process.env.HOST,
     user: process.env.USER_MYSQL,
+    port: process.env.PORT_MYSQL,
     password: process.env.PASSWORD_MYSQL,
     database: process.env.DATABASE,
+
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0,
+    queueLimit: 2,
     idleTimeout: 2000,
+    // https://github.com/mysqljs/mysql?tab=readme-ov-file#connection-options
   });
 
   return {
@@ -32,7 +35,6 @@ function db(query) {
       try {
         const connection = await pool.getConnection();
         const [results] = await connection.execute(query, [...args]);
-        console.table(results);
         connection.release();
         return results;
       } catch (error) {
