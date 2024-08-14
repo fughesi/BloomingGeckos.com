@@ -8,7 +8,6 @@ function customerControllers(req, res) {
   res.statusCode = 200;
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*"); // allow all connections
-  // res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET", "POST");
 
   return {
     // GET /api/customer
@@ -41,26 +40,18 @@ function customerControllers(req, res) {
       }
     },
 
-    // POST /api/customer
+    // POST /api/customers
     createCustomer: async () => {
       // get the information from the form
       const { firstName, lastName, email, salutation, password } = JSON.parse(
         await utils().getBodyData(req)
       );
-      // validate all fields
-      validate(firstName).name().valid || "first name field not valid";
-      validate(lastName).name().valid || "last name field not valid";
-      validate(email).email().valid || "email field not valid";
-      validate(password).password().valid || "password field not valid";
 
-      // if (!allFieldsTrue) {
-      //   res.statusCode = 400;
-      //   res.end(
-      //     JSON.stringify({
-      //       message: "All form fields must be complete to process this request",
-      //     })
-      //   );
-      // }
+      // validate all fields
+      validate("firstName", firstName) || "first name field not valid";
+      validate("lastName", lastName) || "last name field not valid";
+      validate("email", email) || "email field not valid";
+      validate("password", password) || "password field not valid";
 
       // format all valid fields and prep for db
       const encryptedPassword = encoding(password).cipher();
@@ -78,11 +69,28 @@ function customerControllers(req, res) {
           email
         )
         .then(async () => {
+          // get id from customer to enter into phone_numbers table
+          const customerIDquery = await db(
+            "SELECT id FROM customer WHERE uuid = ?"
+          ).queryWithArgs(uuid);
+
+          customerIDquery.at(0)
+            ? // populate phone_numbers table if customer_id success
+              db(
+                "INSERT INTO phone_numbers (customer_id, type, number, extension) VALUES (?,?,?,?)"
+              ).queryWithArgs(
+                customerIDquery.at(0)["id"],
+                "mobile1",
+                "123213322",
+                "222"
+              )
+            : console.log("could not get customer_id for phone_numbers table");
+        })
+        .then(async () => {
           // return newly created customer to frontend
           const newCustomer = await db(
             "SELECT * FROM customer WHERE uuid = ?"
           ).queryWithArgs(uuid);
-          console.log(newCustomer);
           res.statusCode = 201;
           res.end(JSON.stringify(newCustomer));
         })
@@ -93,11 +101,17 @@ function customerControllers(req, res) {
         });
     },
 
-    // PATCH /api/customer/:id
+    // PATCH /api/customers/:id
     updateCustomer: async (id) => {
       try {
-        // const itemInDatabase = await productModels().findProductById(String(id));
-        // if (!itemInDatabase) throw new Error("Item not in database");
+        // check to see if customer exists
+        const itemInDatabase = await db(
+          "SELECT * FROM customer WHERE id = ?"
+        ).queryWithArgs(id);
+
+        itemInDatabase.at(0)
+          ? res.end(JSON.stringify(itemInDatabase.at(0)))
+          : console.log("Item not in database");
         // const body = await utils().getPostData(req);
         // const { title, description, price } = JSON.parse(body);
         // const user = {
@@ -105,9 +119,16 @@ function customerControllers(req, res) {
         //   description: description || itemInDatabase.description,
         //   price: price || itemInDatabase.price,
         // };
-        // res.end(
-        //   JSON.stringify(await productModels().updateNewProduct(id, user))
-        // );
+      } catch (error) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ error }));
+      }
+    },
+
+    // DELETE /api/customers/:id
+    deleteCustomer: async (id) => {
+      try {
+        db("DELETE FROM customer WHERE id = ?").queryWithArgs(id);
       } catch (error) {
         res.statusCode = 400;
         res.end(JSON.stringify({ error }));

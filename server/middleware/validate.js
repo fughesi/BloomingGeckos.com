@@ -1,70 +1,35 @@
-function validate(value = "") {
-  const tests = [];
-  value.trim();
+function validate(field = "", value = "") {
+  const preparedField = field.trim().toString();
+  const preparedValue = value.trim().toString();
 
-  return {
-    email() {
-      const regex = /^([a-z\d\.-]+)@([a-z\d-]+).([a-z]{2,})(\.[a-z]{2,})?$/i;
-      tests.push(regex.test(value) && typeof value === "string");
-      return this;
-    },
-
-    name() {
-      const regex = /^[a-z-_]{2,25}$/i;
-      tests.push(regex.test(value) && typeof value === "string");
-      return this;
-    },
-
-    phone() {
-      const regex = /^[\d-\._\(\)]{7,15}$/i;
-      tests.push(regex.test(value));
-      return this;
-    },
-
-    address() {
-      const regex = /^[\w\d]{7,15}$/i;
-      //regex
-      tests.push(regex.test(value));
-      return this;
-    },
-
-    city() {
-      //regex
-      tests.push(regex.test(value));
-      return this;
-    },
-
-    state() {
-      //regex
-      tests.push(regex.test(value));
-      return this;
-    },
-
-    password() {
-      const regex = /^[\w]{8,25}$/i;
-      tests.push(regex.test(value) && typeof value === "string");
-      return this;
-    },
-
-    match(match) {
-      tests.push(value === match);
-      return this;
-    },
-
-    min(min = 0) {
-      tests.push(Boolean(value.length >= min));
-      return this;
-    },
-
-    max(max = 0) {
-      tests.push(Boolean(value.length <= max));
-      return this;
-    },
-
-    get valid() {
-      return tests.every(Boolean);
-    },
+  options = {
+    max: 1000,
+    min: 1,
+    ...arguments[2],
   };
+
+  const regex = {
+    firstName: /^[a-z\d]{1,20}$/i,
+    lastName: /^[a-z\d]{1,50}$/i,
+    username: /^[a-z\d]{5,12}$/i,
+    password: /^[\w@-]{8,20}$/,
+    phone: /^\d{7,15}$/,
+    email: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/i,
+    address: /^[\w\d]{7,15}$/i,
+    city: /^[\w\d]{7,15}$/i, // needs work
+    state: /^[a-z]{2}$/i,
+    notValid: "value not contained in regex table",
+  };
+
+  return regex[field]
+    ? console.log(
+        [
+          regex[preparedField]?.test(preparedValue),
+          preparedValue.length >= options.min,
+          preparedValue.length <= options.max,
+        ].every(Boolean)
+      )
+    : console.log(regex["notValid"]);
 }
 
 module.exports = { validate };

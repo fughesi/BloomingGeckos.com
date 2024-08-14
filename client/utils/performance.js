@@ -53,25 +53,25 @@ function performance(elem) {
       });
     },
 
-    fetchAPI: async (url, options = { method: "GET" }) => {
-      let fetchOptions = {
-        ...options,
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-      };
-
-      const response = await fetch(String(url), fetchOptions).catch((err) =>
-        console.log(err)
-      );
-
-      return response;
-    },
+    // fetchAPI: async (url, options = { method: "GET" }) => {
+    //   let fetchOptions = {
+    //     ...options,
+    //     mode: "cors",
+    //     cache: "no-cache",
+    //     credentials: "same-origin",
+    //     headers: {
+    //       "Content-type": "application/json; charset=UTF-8",
+    //     },
+    //     redirect: "follow",
+    //     referrerPolicy: "no-referrer",
+    //   };
+    //
+    //   const response = await fetch(String(url), fetchOptions).catch((err) =>
+    //     console.log(err)
+    //   );
+    //
+    //   return response;
+    // },
 
     fadeImages: () => {
       document.querySelectorAll("img").forEach((pic) => {

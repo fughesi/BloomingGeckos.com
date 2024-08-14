@@ -2,6 +2,7 @@ const { createPool } = require("mysql2/promise");
 
 function db(query) {
   const pool = createPool({
+    // https://github.com/mysqljs/mysql?tab=readme-ov-file#connection-options
     host: process.env.HOST,
     user: process.env.USER_MYSQL,
     port: process.env.PORT_MYSQL,
@@ -12,7 +13,6 @@ function db(query) {
     connectionLimit: 10,
     queueLimit: 2,
     idleTimeout: 2000,
-    // https://github.com/mysqljs/mysql?tab=readme-ov-file#connection-options
   });
 
   return {
@@ -26,8 +26,6 @@ function db(query) {
       } catch (error) {
         console.log(error);
         return;
-      } finally {
-        console.log("Connection terminated");
       }
     },
 
@@ -39,8 +37,7 @@ function db(query) {
         return results;
       } catch (error) {
         console.log(error);
-      } finally {
-        console.log("Connection terminated");
+        return;
       }
     },
   };

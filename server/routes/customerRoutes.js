@@ -18,7 +18,7 @@ async function customerRoutes(req, res) {
 
     case "PATCH":
       if (id) {
-        await customerControllers(req, res).updateUser(id);
+        await customerControllers(req, res).updateCustomer(id);
       }
       break;
 
