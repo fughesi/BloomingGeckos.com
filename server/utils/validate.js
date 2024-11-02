@@ -21,7 +21,7 @@ function validate(field = "", value = "") {
     notValid: "value not contained in regex table",
   };
 
-  return regex[field]
+  return regex[preparedField]
     ? console.log(
         [
           regex[preparedField]?.test(preparedValue),

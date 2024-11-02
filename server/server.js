@@ -1,40 +1,66 @@
 const http = require("node:http");
 const path = require("node:path");
 const PORT = process.env.PORT || 5550;
-const { utils } = require("./middleware/utils");
-const { logger } = require("./middleware/logger");
+const { middleware } = require("./utils/middleware");
 const { productRoutes } = require("./routes/productRoutes");
 const { customerRoutes } = require("./routes/customerRoutes");
-
-const mimeTypes = {
-  ".html": "text/html",
-  ".js": "text/javascript",
-  ".css": "text/css",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".gif": "image/gif",
-  ".svg": "image/svg+xml",
-  ".json": "application/json",
-  ".ico": "image/x-icon",
-  ".bin": "application/octet-stream",
-};
 
 http
   .createServer(async (req, res) => {
     try {
-      let filePath = "../client" + req.url;
-      if (filePath === "../client/") filePath = "../client/index.html";
+      const endpoint = req.url;
+      const extension = path.extname(endpoint).toLowerCase();
 
-      const extname = String(path.extname(filePath)).toLowerCase();
-      const contentType = mimeTypes[extname] || "text/html";
+      const mimetypes = {
+        ".css": "text/css",
+        ".js": "text/javascript",
+        ".html": "text/html",
+        ".json": "application/json",
+        ".ico": "image/x-icon",
+        ".png": "image/png",
+        ".jpeg": "image/jpeg",
+        ".jpg": "image/jpeg",
+        ".mp4": "video/mp4",
+        ".svg": "image/svg+xml",
+        ".webp": "image/webp",
+        ".woff": "font/woff",
+        ".rtf": "application/rtf",
+        ".gif": "image/gif",
+        ".bin": "application/octet-stream",
+      };
 
-      utils().serveFile(filePath, contentType, res);
+      let contentType = mimetypes[extension] || "text/html";
 
-      if (/\/api\/products[/]?(\w+)?/i.test(req.url)) productRoutes(req, res);
-      if (/\/api\/customers[/]?(\w+)?/i.test(req.url)) customerRoutes(req, res);
+      let file = path.join(__dirname, "..", "client", endpoint);
+
+      if (file === "../client/") file = "../client/index.html";
+
+      const pages = [
+        "/",
+        "/availability",
+        "/contact",
+        "/terms",
+        "/home",
+        "/care",
+      ];
+
+      if (pages.indexOf(endpoint) > -1)
+        // redirects to index on refresh so router.js can navigate
+        file = path.join(__dirname, "..", "client", "index.html");
+
+      if (req.headers["content-type"] === "application/json") {
+        // API endpoints
+        // aboutController(req, res).about();
+        console.log("thing");
+      } else {
+        // static files
+        middleware().serveFile(file, contentType, res);
+      }
     } catch (error) {
-      logger(req, res, error).errorLogs();
-      console.log(error);
+      // middleware().logger(req, res, error).errorLogs();
+      res.statusCode = 500;
+      res.setHeader("Content-Type", "text/plain");
+      res.end(error.message);
     }
   })
   .listen(PORT, () => {

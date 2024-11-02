@@ -1,4 +1,4 @@
-const { utils } = require("../middleware/utils");
+const { middleware } = require("../utils/middleware");
 
 function productControllers(req, res) {
   res.statusCode = 200;

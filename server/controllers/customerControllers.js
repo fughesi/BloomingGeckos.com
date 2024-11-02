@@ -1,8 +1,6 @@
 const crypto = require("node:crypto");
-const { utils } = require("../middleware/utils");
+const { utils } = require("../utils/middleware");
 const { db } = require("../connections/connectionSQL");
-const { validate } = require("../middleware/validate");
-const { encoding } = require("../middleware/encoding");
 
 function customerControllers(req, res) {
   res.statusCode = 200;
@@ -48,13 +46,15 @@ function customerControllers(req, res) {
       );
 
       // validate all fields
-      validate("firstName", firstName) || "first name field not valid";
-      validate("lastName", lastName) || "last name field not valid";
-      validate("email", email) || "email field not valid";
-      validate("password", password) || "password field not valid";
+      middleware().validate("firstName", firstName) ||
+        "first name field not valid";
+      middleware().validate("lastName", lastName) ||
+        "last name field not valid";
+      middleware().validate("email", email) || "email field not valid";
+      middleware().validate("password", password) || "password field not valid";
 
       // format all valid fields and prep for db
-      const encryptedPassword = encoding(password).cipher();
+      const encryptedPassword = middleware().encoding(password).cipher();
       const uuid = crypto.randomUUID();
 
       db(

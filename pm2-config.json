@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "BloomingGeckos",
+      "script": "npm start",
+      "cwd": "server"
+    }
+  ]
+}

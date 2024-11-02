@@ -5,3 +5,5 @@
 6/29/2024	11:38:10 AM	[id:1290d186]	ReferenceError: id is not defined
 6/29/2024	11:38:37 AM	[id:a6dc8629]	ReferenceError: id is not defined
 6/29/2024	11:39:15 AM	[id:d5397865]	ReferenceError: id is not defined
+11/1/2024	12:03:08 AM	[id:f5d2c243]	ReferenceError: Cannot access 'extension' before initialization
+11/1/2024	12:03:08 AM	[id:0dc38f38]	ReferenceError: Cannot access 'extension' before initialization

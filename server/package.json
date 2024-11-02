@@ -1,17 +1,16 @@
 {
-  "name": "practice",
+  "name": "BloomingGeckos",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon --env-file=.env  server.js"
+    "start": "nodemon --env-file=.env  server.js"
   },
-  "keywords": [],
+  "keywords": [
+    "eCommerce"
+  ],
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "nodemon": "^3.1.0"
-  },
   "dependencies": {
     "mysql2": "^3.11.0",
     "pg": "^8.12.0"
